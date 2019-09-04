@@ -1,0 +1,1168 @@
+        $redColor: #d81212;
+        $whiteColor: #fff;
+        $fontSizeMain: 13pt;
+        $fontSizeHeadline: 2.8em;
+        $fontSizeHeadline2: 2.2em;
+        $fontSizeHeadline3: 1.8em;
+        $fontSizeTitle: 1.3em;
+        $fontSizeText: 1.1em;
+        @mixin flex($just-cont: flex-start, $align-item: stretch, $align-cont: flex-start, $fl-direc: row, $fl-wrap: wrap) {
+            justify-content: $just-cont;
+            align-items: $align-item;
+            align-content: $align-cont;
+            flex-direction: $fl-direc;
+            flex-wrap: $fl-wrap;
+            display: flex;
+        }
+        
+        @mixin size($width, $height) {
+            width: $width;
+            height: $height;
+        }
+        
+        @mixin headline($margTop) {
+            border-left: 14px solid $redColor;
+            padding-left: 20px;
+            margin-left: -2%;
+            margin-top: $margTop;
+            margin-bottom: $margTop;
+        }
+        
+        @mixin btn {
+            padding: 10px 20px;
+            background: $redColor;
+            color: $whiteColor;
+            text-decoration: none;
+        }
+        
+        @mixin position($position, $top: auto, $right: auto, $bottom: auto, $left: auto, $pLeft: 0, $pTop: 0) {
+            position: $position;
+            top: $top;
+            right: $right;
+            bottom: $bottom;
+            left: $left;
+            transform: translate($pLeft, $pTop)
+        }
+        
+        @mixin btnAnimation() {
+            background: #c20c00;
+            padding: 12px 22px;
+            transition: all 0.2s;
+            margin-top: 0;
+            border-radius: 5px;
+        }
+        
+        @mixin _1440 {
+            @media (max-width: 1440px) {
+                @content;
+            }
+        }
+        
+        @mixin _1280 {
+            @media (max-width: 1280px) {
+                @content;
+            }
+        }
+        
+        @mixin _1024 {
+            @media (max-width: 1024px) {
+                @content;
+            }
+        }
+        
+        @mixin _768 {
+            @media (max-width: 768px) and (orientation: portrait), (max-width: 768px) {
+                @content;
+            }
+        }
+        
+        @mixin _700 {
+            @media (max-height: 700px) {
+                @content;
+            }
+        }
+        
+        @mixin _520 {
+            @media (max-height: 520px) {
+                @content;
+            }
+        }
+        
+        @mixin _430 {
+            @media (min-width: 430px) {
+                @content;
+            }
+        }
+        
+        @mixin _320 {
+            @media (min-width: 320px) and (orientation: portrait) {
+                @content;
+            }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: $fontSizeMain;
+            @include _1440() {
+                font-size: 12pt;
+            }
+        }
+        
+        .content {
+            margin-left: 10%;
+            margin-right: 10%;
+            @include _1024() {
+                margin-left: 7%;
+                margin-right: 7%;
+            }
+            @include _320() {
+                margin-left: 5%;
+                margin-right: 5%;
+            }
+        }
+        
+        h1,
+        h2 {
+            font-size: $fontSizeHeadline;
+            @include _1024() {
+                font-size: 2.8em;
+            }
+            @include _320() {
+                font-size: $fontSizeHeadline2;
+            }
+        }
+        
+        h2 {
+            @include headline(40px);
+            @include _1280() {
+                @include headline(30px);
+            }
+        }
+        
+        h3 {
+            font-size: $fontSizeTitle;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        .block {
+            margin-top: 45px;
+            margin-bottom: 90px;
+        }
+        
+        .active {
+            color: $redColor;
+        }
+        
+        .mainPicture {
+            position: relative;
+            overflow: hidden;
+            @include size(100%, 100vh);
+            .wrap {
+                @include position(fixed, 0, 0);
+                background-color: rgba(0, 0, 0, 0.8);
+                width: 100%;
+                z-index: 2100;
+            }
+            .fish {
+                @include position(absolute, $top: 35%, $left: 50%, $pTop: -35%, $pLeft: -50%);
+                z-index: 90;
+                img {
+                    @include size(375px, 375px);
+                    @include _700() {
+                        @include size(300px, 300px);
+                    }
+                    @include _520() {
+                        display: none;
+                    }
+                }
+            }
+            .text {
+                @include position(absolute, $top: 70%);
+                color: $whiteColor;
+                z-index: 1000;
+                width: 80%;
+                @include _700() {
+                    @include position(absolute, $top: 60%);
+                }
+                @include _520() {
+                    @include position(absolute, $top: 30%);
+                }
+                @include _320() {
+                    bottom: 0;
+                }
+                h4 {
+                    font-size: $fontSizeTitle;
+                    margin: 20px 0;
+                    @include _320() {
+                        font-size: 1em;
+                    }
+                }
+                a {
+                    color: $redColor;
+                    font-size: $fontSizeTitle;
+                }
+            }
+            #video-bg {
+                @include position($position: absolute, $top: 0, $left: 0, $bottom: 0, $right: 0);
+                overflow: hidden;
+                z-index: 1;
+                background: url(bg/daisy-stock-poster.jpg) no-repeat #0f0d17;
+                background-size: cover;
+                video {
+                    @include position($position: absolute, $top: 0, $left: 0);
+                    @include size(auto, auto);
+                    min-width: 100%;
+                    min-height: 100%;
+                }
+                @supports (object-fit: cover) {
+                    video {
+                        @include size(100%, 100%);
+                        top: 0;
+                        left: 0;
+                        object-fit: cover;
+                    }
+                }
+            }
+        }
+        
+        .head,
+        .head.butMenu {
+            @include _1024() {
+                padding: 7px 7% 7px 7%;
+                .menu.activeMenu .menuUl,
+                .menu.activeMenu .langUl {
+                    @include position($position: relative, $top: 35%, $left: 45.5%, $pTop: -50%, $pLeft: -50%);
+                    display: block;
+                }
+                .menu.activeMenu .menuUl li,
+                .menu.activeMenu .langUl li {
+                    text-align: center;
+                    line-height: 48px;
+                }
+            }
+        }
+        
+        .head {
+            @include flex($just-cont: space-between, $align-item: center, $align-cont: flex-start, $fl-direc: row, $fl-wrap: wrap);
+            padding: 15px 10% 15px 10%;
+            color: $whiteColor;
+            z-index: 110;
+            img {
+                @include size(125px, auto);
+                z-index: 1110;
+                @include _1024() {
+                    @include size(100px, auto);
+                }
+            }
+            .menu {
+                display: flex;
+                z-index: 1400;
+                @include _1024() {
+                    display: none;
+                }
+                ul {
+                    display: flex;
+                    li {
+                        padding-left: 40px;
+                        text-transform: uppercase;
+                        font-weight: bold;
+                        a {
+                            // color: green;
+                            color: $whiteColor;
+                            text-decoration: none;
+                            font-size: 11pt;
+                            transition: all 0.4s;
+                            &:hover,
+                            &.active {
+                                color: $redColor;
+                                transition: all 0.4s;
+                            }
+                        }
+                    }
+                }
+            }
+            .mobile-menu {
+                @include size(50px, 50px);
+                @include flex($just-cont: center, $align-item: center, $fl-direc: column);
+                display: none;
+                cursor: pointer;
+                z-index: 5000;
+                @include _1024() {
+                    display: flex;
+                }
+                span {
+                    transition: all 0.3s;
+                    @include size(50px, 4px);
+                    margin: 5px;
+                    background: $redColor;
+                }
+                .first {
+                    transform: translate(6px, -2px) rotate(45deg);
+                    -webkit-transform: translate(6px, -2px) rotate(45deg);
+                    transform-origin: left top;
+                    -webkit-transform-origin: left top;
+                }
+                .middle {
+                    transform: scale(0);
+                    -webkit-transform: scale(0);
+                }
+                .last {
+                    transform: translate(-9px, -36px) rotate(-45deg);
+                    -webkit-transform: translate(-9px, -36px) rotate(-45deg);
+                    transform-origin: right bottom;
+                    -webkit-transform-origin: right bottom;
+                }
+            }
+        }
+        
+        .menu.activeMenu {
+            @include _1024() {
+                @include position($position: fixed, $top: 0, $left: 0);
+                visibility: visible;
+                display: block;
+                background: #000;
+                opacity: 0.9;
+                width: 100%;
+                height: 100vh;
+                z-index: 1000;
+            }
+        }
+        
+        .wrap-works {
+            a.btn {
+                margin-top: 2px;
+                float: right;
+                color: $whiteColor;
+                transition: all 0.2s;
+                @include btn();
+            }
+            a.btn:hover {
+                @include btnAnimation();
+            }
+        }
+        
+        .works {
+            @include flex(space-between, top);
+            @include size(100%, auto);
+            .work {
+                @include size(48%, auto);
+                @include _768() {
+                    width: 100%;
+                }
+                @include _320() {
+                    width: 100%;
+                }
+                a {
+                    color: #000;
+                    text-decoration: none;
+                }
+                img {
+                    @include size(100%, auto);
+                }
+                h4 {
+                    font-size: $fontSizeTitle;
+                    font-weight: 300;
+                    margin-bottom: 30px;
+                    @include _1024() {
+                        font-size: 1.3em;
+                    }
+                    span {
+                        font-size: 1em;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+        
+        .ground {
+            background: #000;
+        }
+        
+        .team {
+            padding: 45px 0 90px 0;
+            h2 {
+                @include headline(0px);
+                color: $whiteColor;
+            }
+            h4 {
+                color: $whiteColor;
+            }
+            .people {
+                @include flex(space-between, flex-start, $fl-wrap: none);
+                @include size(100%, auto);
+                margin-top: 30px;
+                @include _768() {
+                    flex-direction: column;
+                }
+                @include _320() {
+                    flex-direction: column;
+                }
+                .person {
+                    @include size(30%, auto);
+                    @include _768() {
+                        margin-bottom: 50px;
+                        @include size(100%, auto);
+                    }
+                    @include _320() {
+                        margin-bottom: 50px;
+                        @include size(100%, auto);
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
+                    h3 {
+                        padding: 10px 0;
+                        color: $redColor;
+                        font-weight: 500;
+                    }
+                    h4 {
+                        font-size: 1.3em;
+                        font-weight: 300;
+                    }
+                    .photo {
+                        position: relative;
+                        .social {
+                            @include position(absolute, $bottom: 5%, $left: 5%);
+                            a {
+                                margin-right: 10px;
+                            }
+                        }
+                        img.mainPhoto {
+                            width: 100%;
+                        }
+                        img:not(.mainPhoto) {
+                            @include size(30px, 30px);
+                        }
+                    }
+                }
+            }
+        }
+        
+        .about {
+            @include flex(space-between, flex-end);
+            margin-bottom: 60px;
+            @include _320() {
+                margin-bottom: 30px;
+            }
+            .text {
+                @include size(48%, auto);
+                @include _1024() {
+                    width: 100%;
+                }
+                @include _320() {
+                    width: 100%;
+                }
+                p {
+                    font-size: $fontSizeTitle;
+                    line-height: 36px;
+                    @include _1280() {
+                        line-height: 36px;
+                    }
+                    @include _320() {
+                        line-height: 30px;
+                    }
+                }
+                h3 {
+                    font-size: $fontSizeHeadline2;
+                    padding: 50px 0;
+                    @include _1280() {
+                        padding: 30px 0;
+                    }
+                    @include _320() {
+                        font-size: 2em;
+                        padding: 20px 0;
+                    }
+                }
+                .squard {
+                    @include size(35px, 35px);
+                    margin-bottom: 30px;
+                    background: $redColor;
+                    h4 {
+                        padding-left: 50px;
+                        font-size: $fontSizeHeadline3;
+                    }
+                }
+                p.advText {
+                    padding-left: 50px;
+                }
+            }
+            .adver {
+                @include size(48%, auto);
+                @include _1024() {
+                    margin-top: 10px;
+                    width: 100%;
+                }
+                @include _320() {
+                    width: 100%;
+                }
+                video {
+                    @include size(100%, auto);
+                }
+            }
+        }
+        /* Реализация проекта*/
+        
+        .tmpImg {
+            display: none;
+            @include _1024() {
+                display: block;
+                width: 100%;
+            }
+            img {
+                width: 100%;
+            }
+            button {
+                @include flex($just-cont: flex-end);
+                @include size(100%, 80px);
+                margin-top: -10px;
+                padding-left: 7%;
+                padding-right: 7%;
+                width: 100%;
+                height: 80px;
+                background: #000;
+                border: none;
+                a {
+                    @include btn();
+                    margin-top: 2px;
+                }
+            }
+            button a.btn:hover {
+                @include btnAnimation();
+            }
+        }
+        
+        .wrapper {
+            height: 700px;
+            position: relative;
+            background: #000;
+            box-sizing: content-box;
+            @include _1024() {
+                display: none;
+            }
+            &::after {
+                content: "";
+                @include size(100%, 4px);
+                @include position(absolute, 50%, $pTop: -50%);
+                background: #d81212;
+            }
+            .content {
+                margin-left: 7.5%;
+                margin-right: 10%;
+            }
+            .blocks {
+                @include size(80%, 700px);
+                @include flex($just-cont: center, $fl-direc: column);
+                box-sizing: border-box;
+                position: absolute;
+                h3 {
+                    color: $whiteColor;
+                }
+                .blocker {
+                    width: 100%;
+                    box-sizing: border-box;
+                }
+                a.btn {
+                    @include btn();
+                    position: absolute;
+                    right: -40px;
+                    bottom: 40px;
+                }
+                a.btn:hover {
+                    @include btnAnimation();
+                    bottom: 38px;
+                }
+            }
+        }
+        
+        .block1 {
+            @include flex($just-cont: space-between, $align-item: center, $align-cont: center, $fl-direc: row);
+            height: 200px;
+            padding-right: 5.9%;
+            li::after {
+                @include position(absolute, $top: 100%, $left: 50%, $pLeft: -50%);
+                @include size(3px, 100px);
+                content: "";
+                background: $redColor;
+            }
+            li:nth-child(1):before {
+                content: "БРИФИНГ";
+            }
+            li:nth-child(2):before {
+                content: "РАСКАДРОВКА";
+            }
+            li:nth-child(3):before {
+                content: "АНИМАЦИОННОЕ ИЛИ ВИДЕО ПРОИЗВОДСТВО";
+            }
+            li:nth-child(4):before {
+                content: "POST-PRODUCTION";
+            }
+            li.pol:nth-child(1):before {
+                content: "BRIEFING";
+            }
+            li.pol:nth-child(2):before {
+                content: "STORYBOARD";
+            }
+            li.pol:nth-child(3):before {
+                content: "PRODUKCJA WIDEO LUB ANIMACJI";
+            }
+            li.pol:nth-child(4):before {
+                content: "POST-PRODUCTION";
+            }
+            li.eng:nth-child(1):before {
+                content: "BRIEFING";
+            }
+            li.eng:nth-child(2):before {
+                content: "STORYBOARD";
+            }
+            li.eng:nth-child(3):before {
+                content: "ANIMATED OR VIDEO PRODUCTION";
+            }
+            li.eng:nth-child(4):before {
+                content: "POST-PRODUCTION";
+            }
+        }
+        
+        .block2 {
+            @include flex($just-cont: space-between, $fl-direc: row);
+            padding-right: 5.9%;
+            position: absolute;
+            li {
+                @include size(52px, 52px);
+                position: relative;
+                border-radius: 50%;
+                padding: 8px 8px 5px 8px;
+                span {
+                    @include position(absolute, $top: 50%, $left: 50%, $pTop: -50%, $pLeft: -50%);
+                    display: block;
+                    @include size(20px, 20px);
+                    border-radius: 50%;
+                    background: $redColor;
+                }
+            }
+        }
+        
+        .block3 {
+            @include flex($just-cont: space-between, $align-item: center, $align-cont: center);
+            height: 300px;
+            padding-right: 20.7%;
+            padding-left: 14.8%;
+            @include _1440() {
+                padding-right: 20.6%;
+                padding-left: 14.6%;
+            }
+            li::after {
+                @include position(absolute, $top: 55px, $left: 50%, $pLeft: -50%, $pTop: -138px);
+                @include size(3px, 80px);
+                content: "";
+                background: $redColor;
+            }
+            li:nth-child(1):before {
+                content: "СЦЕНАРИЙ";
+            }
+            li:nth-child(2):before {
+                content: "ОЗВУЧКА";
+            }
+            li:nth-child(3):before {
+                content: "СОЗДАНИЕ И СИНХРОНИЗАЦИЯ ЗВУКОВОГО СОПРОВОЖДЕНИЯ";
+            }
+            li.pol:nth-child(1):before {
+                content: "SCENARIUSZ";
+            }
+            li.pol:nth-child(2):before {
+                content: "GŁOS LEKTORA";
+            }
+            li.pol:nth-child(3):before {
+                content: "AUDIO MIX";
+            }
+            li.eng:nth-child(1):before {
+                content: "SCRIPTING";
+            }
+            li.eng:nth-child(2):before {
+                content: "VOICE OVER";
+            }
+            li.eng:nth-child(3):before {
+                content: "AUDIO MIX";
+            }
+            li:nth-child(2) img {
+                @include size(25px, 35px);
+            }
+            li:nth-child(2) {
+                padding: 13px 20px 10px 20px;
+            }
+        }
+        
+        .block1 li:nth-child(1):before,
+        .block1 li:nth-child(2):before,
+        .block1 li:nth-child(3):before,
+        .block1 li:nth-child(4):before,
+        .block3 li:nth-child(1):before,
+        .block3 li:nth-child(2):before,
+        .block3 li:nth-child(3):before {
+            @include position(absolute, $top: 50%, $left: 120%, $pTop: -50%);
+            color: $whiteColor;
+        }
+        
+        .block1 li,
+        .block3 li {
+            position: relative;
+            border: 3px solid $redColor;
+            border-radius: 50%;
+            padding: 13px 13px 10px 13px;
+        }
+        
+        .block1 li img,
+        .block3 li img {
+            @include size(35px, 35px);
+        }
+        /* Brand блок*/
+        
+        .brand {
+            @include flex($just-cont: space-between, $align-item: flex-start);
+            padding: 50px 0;
+            @include _1024() {
+                flex-direction: column;
+            }
+            @include _320() {
+                padding: 30px 0;
+            }
+            .image {
+                @include size(36%, 100%);
+                align-self: flex-end;
+                @include _1024() {
+                    @include flex(center);
+                    width: 100%;
+                    margin-top: 50px;
+                }
+                @include _320() {
+                    width: 100%;
+                    margin-top: 50px;
+                }
+            }
+            .image img {
+                @include size(auto, 300px);
+                float: right;
+            }
+            .text {
+                margin-left: 50px;
+                width: 56%;
+                @include _1024() {
+                    margin-left: 15px;
+                    width: 100%;
+                }
+                @include _320() {
+                    margin-left: 10px;
+                    width: 100%;
+                }
+                h3 {
+                    margin-left: -50px;
+                    padding-left: 10px;
+                    margin-bottom: 30px;
+                    font-size: $fontSizeHeadline3;
+                    border-left: 35px solid $redColor;
+                    @include _768() {
+                        margin-bottom: 20px;
+                    }
+                    @include _320() {
+                        margin-bottom: 20px;
+                        border-left: 10px solid #d81212;
+                        margin-left: -20px;
+                    }
+                }
+                h4 {
+                    margin-top: 30px;
+                    font-size: $fontSizeTitle;
+                    font-weight: bold;
+                }
+                ul li {
+                    list-style-type: disc;
+                    font-size: $fontSizeTitle;
+                    color: $redColor;
+                    margin-left: 25px;
+                }
+                p {
+                    font-size: $fontSizeTitle;
+                }
+                ul li span {
+                    font-size: 1em;
+                    line-height: 36px;
+                    font-weight: 500;
+                    color: #000;
+                    @include _320() {
+                        line-height: 18px;
+                    }
+                }
+            }
+        }
+        
+        .contact {
+            height: auto;
+            background: #000;
+            color: $redColor;
+            padding: 50px 0 80px 0;
+            box-sizing: border-box;
+            overflow: hidden;
+            .content {
+                @include flex($just-cont: space-between, $fl-wrap: wrap);
+            }
+            @include _320() {
+                padding: 40px 0 70px 0;
+            }
+            .left {
+                width: 48%;
+                @include _768() {
+                    width: 100%;
+                }
+            }
+            .right {
+                @include size(auto, 300px);
+                @include _768() {
+                    display: none;
+                }
+                img {
+                    @include size(auto, 300px);
+                }
+            }
+            .head.butMenu {
+                width: 100%;
+            }
+            .contacts {
+                @include flex($just-cont: flex-start, $align-item: space-between, $align-cont: space-between, $fl-direc: row);
+                li {
+                    font-size: $fontSizeTitle;
+                    margin-bottom: 55px;
+                    width: 100%;
+                    @include _320() {
+                        font-size: 1.4em;
+                        margin-bottom: 35px;
+                    }
+                }
+                li:last-child {
+                    margin-bottom: 0px;
+                }
+            }
+            .icons {
+                @include flex( $just-cont: flex-start);
+                margin-top: 45px;
+                margin-bottom: 45px;
+                @include _320() {
+                    justify-content: space-between;
+                    margin-bottom: 35px;
+                }
+                a {
+                    margin-right: 4px;
+                    margin-left: 4px;
+                    border-radius: 50%;
+                    a:first-child,
+                    a:last-child {
+                        margin-right: none;
+                        margin-left: none;
+                    }
+                    &:hover {
+                        img {
+                            margin-top: -2px;
+                            margin-bottom: -2px;
+                            @include size(40px, 40px);
+                        }
+                        margin-right: 2px;
+                        margin-left: 2px;
+                    }
+                    img {
+                        @include size(36px, 36px);
+                        @include _1440() {}
+                    }
+                }
+            }
+            .head {
+                width: 100%;
+                align-items: flex-end;
+                padding: 0;
+                position: relative;
+                .mobile-menu {
+                    @include _1024() {
+                        display: none;
+                    }
+                }
+                .menu {
+                    display: flex;
+                    @include _1024() {
+                        display: none;
+                    }
+                }
+            }
+            button {
+                border: 0;
+                background-color: transparent;
+                height: 0px;
+                cursor: pointer;
+            }
+            .btn {
+                @include flex(center, center, center, -direc, -wrap);
+                @include position(fixed, $bottom: 0, $right: 10%);
+                @include size(22%, 50px);
+                outline: none;
+                background: $redColor;
+                color: $whiteColor;
+                z-index: 9100;
+                @include _1280() {
+                    width: 28%;
+                }
+                @include _1024() {
+                    width: 34%;
+                }
+                @include _768() {
+                    width: 50%;
+                }
+                @include _320() {
+                    width: 80%;
+                }
+                img {
+                    @include size(38px, 25px);
+                    margin-right: 10px;
+                }
+            }
+            .contantForm.activeForm {
+                bottom: 0px;
+            }
+            .contantForm {
+                @include position(fixed, $right: 10%, $bottom: -432px);
+                @include flex($just-cont: center, $align-item: center, $align-cont: center, $fl-direc: column);
+                @include size(26%, auto);
+                padding-bottom: 15px;
+                background: #151b21;
+                -webkit-transition: top 0.5s linear;
+                -moz-transition: top 0.5s linear;
+                transition: bottom 0.5s linear;
+                z-index: 9000;
+                @include _1280() {
+                    width: 32%;
+                }
+                @include _1024() {
+                    width: 40%;
+                }
+                @include _768() {
+                    width: 55%;
+                }
+                @include _320() {
+                    bottom: -443px;
+                    right: 0;
+                    width: 100%;
+                }
+                h4 {
+                    @include flex($just-cont: center, $align-item: center, $align-cont: center, $fl-direc: row);
+                    @include size(100%, 60px);
+                    background: $redColor;
+                    color: $whiteColor;
+                    padding: 0px 10px;
+                    box-sizing: border-box;
+                    cursor: pointer;
+                    img {
+                        @include size(38px, 27px);
+                        margin-right: 10px;
+                    }
+                }
+                .off {
+                    width: 85%;
+                    margin-top: 15px;
+                    @include _1440() {
+                        margin-top: 25px;
+                    }
+                    p {
+                        @include flex($align-item: center, $align-cont: center);
+                        color: #000;
+                        height: 85px;
+                        background: #e6e6e6;
+                        padding: 0px 10px 0px 10px;
+                        border-radius: 0 10px 10px 10px;
+                    }
+                }
+                form {
+                    @include flex($just-cont: center, $align-item: center, $fl-direc: row);
+                    input,
+                    textarea {
+                        justify-content: center;
+                        border: 2px solid #cdcdcd;
+                        width: 80%;
+                        background: #151b21;
+                        color: #e6e6e6;
+                        padding: 7px;
+                        margin-top: 15px;
+                        &:focus {
+                            outline: none;
+                            border: 2px solid $redColor;
+                        }
+                    }
+                    button {
+                        @include size(45%, 30px);
+                        margin: 15px 7% 0 7%;
+                        color: $whiteColor;
+                        align-self: flex-end;
+                        background: $redColor;
+                        border-radius: 0;
+                        border: none;
+                        cursor: pointer;
+                        @include _1440() {
+                            margin: 15px 7% 15px 7%;
+                        }
+                    }
+                }
+            }
+        }
+        /* -=-=-=-=-=-=-=-=-= Work page =-=-=-=-=-=-=-=-=-=-=- */
+        
+        .project {
+            background: #fff;
+        }
+        
+        .head.butMenu {
+            .menu {
+                ul {
+                    li {
+                        a {
+                            color: #000;
+                            @include _1024() {
+                                color: $whiteColor;
+                            }
+                            &.active,
+                            &:hover {
+                                color: $redColor;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        /* -=-=-=-=-=-=-=-=-=-=-= Adver page =-=-=-=-=-=-=-=-=-=-=-*/
+        
+        .title.adver {
+            p {
+                @include _1024() {
+                    width: 100%;
+                }
+            }
+        }
+        
+        .mainImage {
+            @include size(100%, auto);
+            img {
+                width: 100%;
+            }
+            video {
+                width: 100%;
+            }
+        }
+        
+        .whiteBlock {
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .title {
+            margin-bottom: 40px;
+            h3 {
+                color: $redColor;
+                text-transform: uppercase;
+                font-size: $fontSizeHeadline;
+                @include _1280() {
+                    font-size: $fontSizeHeadline2;
+                }
+            }
+            ul {
+                li {
+                    font-size: $fontSizeTitle;
+                    line-height: 40px;
+                    font-weight: bold;
+                    @include _1280() {
+                        font-size: 1.2em;
+                        line-height: 30px;
+                    }
+                }
+            }
+            p {
+                line-height: 40px;
+                width: 50%;
+                float: right;
+                text-align: left;
+                margin-top: 30px;
+                margin-bottom: 40px;
+                font-size: $fontSizeTitle;
+                font-weight: bold;
+                @include _1280() {
+                    font-size: 1.2em;
+                    line-height: 30px;
+                }
+                @include _1024() {
+                    font-size: 1.2em;
+                    line-height: 30px;
+                    width: 65%;
+                }
+                @include _768() {
+                    width: 80%;
+                }
+                span {
+                    font-size: $fontSizeText;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+            }
+            img {
+                @include size(100%, auto);
+                margin-bottom: 40px;
+            }
+            .combo {
+                @include flex($just-cont: space-between, $align-item: flex-start, $fl-wrap: wrap);
+                .text {
+                    @include flex($fl-direc: column);
+                    &>* {
+                        width: 100%;
+                    }
+                    h4 {
+                        font-size: $fontSizeHeadline3;
+                    }
+                }
+                &>* {
+                    width: 48%;
+                    @include _1024() {
+                        width: 100%;
+                    }
+                }
+            }
+            video {
+                margin-bottom: 40px;
+                width: 100%;
+            }
+        }
+        
+        .whiteBlock {
+            .contact {
+                @include flex($just-cont: space-between, $fl-wrap: wrap);
+                background: $whiteColor;
+                padding: 0;
+                width: 100%;
+            }
+        }
+        
+        .realiz {
+            padding: 30px 0 60px;
+            h3 {
+                font-size: $fontSizeHeadline2;
+                text-transform: uppercase;
+                color: $redColor;
+                margin-bottom: 30px;
+            }
+            h4 {
+                font-size: $fontSizeHeadline3;
+                color: $redColor;
+                margin-top: 30px;
+                margin-bottom: 10px;
+            }
+            p {
+                font-weight: bold;
+                font-size: $fontSizeText;
+                line-height: 28px;
+            }
+        }
